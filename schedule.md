@@ -51,7 +51,6 @@
 | Testing			| 0.25|
 | Data Visualization| 1.0 |
 | Code Review		| 1.5 |
-
 |Total Teaching Time| 10.65 |
 
 ### Time by Instructor
