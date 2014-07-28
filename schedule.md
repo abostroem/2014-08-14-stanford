@@ -43,6 +43,8 @@
 
 ###Time Spent on each subject
 
+| Subject			| Time|
+|------------------:|----:|
 | Shell				| 1.0 |
 | Git 				| 3.75|
 | Python			| 3.15|
@@ -54,6 +56,8 @@
 
 ### Time by Instructor
 
+| Instructor| Time	|
+|----------:| -----:|
 | Lonnen	| 5.15 	|
 | Azalee	| 5.0 	|
 | Dani		| 0.25 	|
