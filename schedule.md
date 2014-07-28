@@ -3,8 +3,9 @@
 ## Day 1
 
 ------------
+
 | Time 			| Subject	| Duration (hrs)| Instructor	|
-------------
+|--------------:|----------:|--------------:|--------------:|
 | 8:30 - 9:15	| Set Up	| 0.75			| Everyone		|
 | 9:15 - 9:30	| Welcome	| 0.25			| Azalee		|
 | 9:30 - 10:30	| Shell		| 1.0			| Lonnen		|
@@ -21,8 +22,9 @@
 ## Day 2
 
 ------------
+
 | Time 			| Subject	| Duration (hrs)| Instructor	|
-------------
+|--------------:|----------:|--------------:|--------------:|
 | 9:00 - 10:00	| Python	|	1.0			| Azalee		|
 | 10:00 - 10:15	| Taste of Testing | 0.25	| Chris			|
 | 10:15 - 10:30 | Break		|	0.25		| - 			|
@@ -40,16 +42,18 @@
 ## Stats
 
 ###Time Spent on each subject
-| Shell				| 1.0|
+
+| Shell				| 1.0 |
 | Git 				| 3.75|
 | Python			| 3.15|
 | Testing			| 0.25|
-| Data Visualization| 1.0|
-| Code Review		| 1.5|
+| Data Visualization| 1.0 |
+| Code Review		| 1.5 |
 
 |Total Teaching Time| 10.65 |
 
 ### Time by Instructor
+
 | Lonnen	| 5.15 	|
 | Azalee	| 5.0 	|
 | Dani		| 0.25 	|
