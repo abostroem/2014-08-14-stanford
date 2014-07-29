@@ -6,7 +6,8 @@
 
 | Time 			| Subject	| Duration (hrs)| Instructor	|
 |--------------:|----------:|--------------:|--------------:|
-| 8:30 - 9:15	| Set Up	| 0.75			| Everyone		|
+| 8:30 - 9:00	| Set Up	| 0.75			| Everyone		|
+| 9:00 - 9:15	| Welcome	| 0.25			| Amy
 | 9:15 - 9:30	| Welcome	| 0.25			| Azalee		|
 | 9:30 - 10:30	| Shell		| 1.0			| Lonnen		|
 | 10:30 - 11:00	| Break		| 0.25			| - 			|
