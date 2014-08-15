@@ -1,0 +1,303 @@
+How many are on windows, linux, OSX?
+How many have used a shell before?
+How many have written a script?
+Introduce yourselves to your neighbors.
+
+--- 0
+
+#### Objectives
+*   Explain how the shell relates to the keyboard, the screen, the operating system, and users' programs.
+*   Explain when and why command-line interfaces should be used instead of graphical interfaces.
+
+
+#### What and Why
+At a high level, computers do four things:
+
+-   run programs;
+-   store data;
+-   communicate with each other; and
+-   interact with us.
+
+CLI vs GUI vs REPL
+
+
+#### Key Points
+*   A shell is a program whose primary purpose is to read commands and run other programs.
+*   The shell's main advantages are its high action-to-keystroke ratio,
+    its support for automating repetitive tasks,
+    and that it can be used to access networked machines.
+*   The shell's main disadvantages are its primarily textual nature
+    and how cryptic its commands and operation can be.
+
+--- 1
+
+#### Objectives
+*   Explain the similarities and differences between a file and a directory.
+*   Translate an absolute path into a relative path and vice versa.
+*   Construct absolute and relative paths that identify specific files and directories.
+*   Explain the steps in the shell's read-run-print cycle.
+*   Identify the actual command, flags, and filenames in a command-line call.
+*   Demonstrate the use of tab completion, and explain its advantages.
+
+The file system manages files and folders
+The shell gives us commands to manipulate these files and folders.
+
+    $
+    $ whoami   # lonnen
+
+Finds a program, runs the program, displays the output, displays a prompt
+
+    $ pwd      # print working directory, /Users/lonnen
+
+This is inconsisent. Why no whereami? commands were add one by one with no central planning, only people immersed in it. The result is as inconsistent as English.
+
+Go over home directory, directory structure
+
+    $ ls              # dir contents
+    $ ls -F           # command line flags!
+    $ ls -F data/     # positional args!
+    $ ls -F /data     # absolute file!
+    $ ls -F some-file # list a single file, not too useful, but not an error
+
+    $ cd data         # change directory
+    $ pwd
+    $ ls -F
+    $ cd ..           # alias to the parent
+    $ ls -F -a        # files/folders starting with a dot are hidden, -a reveals
+                      # notice . and ..
+    $ ls -F .         # alias to current directory
+    $ ls data/moar-data/  # tab completion, compound paths
+    $ man ls              # what else does ls do?
+
+#### Key Points
+*   The file system is responsible for managing information on the disk.
+*   Information is stored in files, which are stored in directories (folders).
+*   Directories can also store other directories, which forms a directory tree.
+*   `/` on its own is the root directory of the whole filesystem.
+*   A relative path specifies a location starting from the current location.
+*   An absolute path specifies a location from the root of the filesystem.
+*   Directory names in a path are separated with '/' on Unix, but '\\' on Windows.
+*   '..' means "the directory above the current one";
+    '.' on its own means "the current directory".
+*   Most files' names are `something.extension`.
+    The extension isn't required,
+    and doesn't guarantee anything,
+    but is normally used to indicate the type of data in the file.
+*   Most commands take options (flags) which begin with a '-'.
+
+CHALLENGE
+
+  If `pwd` displays `/users/thing`, what will `ls ../backup` display?
+  1.  `../backup: No such file or directory`
+  2.  `2012-12-01 2013-01-08 2013-01-27`
+  3.  `2012-12-01/ 2013-01-08/ 2013-01-27/`
+  4.  `original pnas_final pnas_sub`
+
+  What does the command `cd` without a directory name do?
+  1.  It has no effect.
+  2.  It changes the working directory to `/`.
+  3.  It changes the working directory to the user's home directory.
+  4.  It produces an error message.
+
+  What does the command `ls` do when used with the -S and -a arguments?
+
+--- 2
+
+#### Objectives
+*   Create a directory hierarchy that matches a given diagram.
+*   Create files in that hierarchy using an editor or by copying and renaming existing files.
+*   Display the contents of a directory using the command line.
+*   Delete specified files and/or directories.
+
+    $ pwd
+    $ ls -F
+    $ mkdir thesis    # create a new directory
+    $ ls -F           # see it in our directory
+    $ cd thesis       # change dir
+    $ nano draft.txt
+
+nano is an editor that works only on text, like Vi, or Emacs, or other specialized editors.
+
+Write a few lines
+Control-O to save it
+Control-X to quit
+
+    $ ls              # draft.txt
+    $ rm draft.txt    # short for remove. no trash -- its gone for real!
+    $ ls              # its gone!
+    $ nano draft.txt  # recreate it as an empty file
+    $ cd ..
+    $ ls              # theres that thesis dir
+    $ rm thesis       # maybe grad school isn't for us, cannot remove
+    $ man rm          # look it up, use / to search
+    $ rm -d thesis    # directory not empty
+    $ rm thesis/draft.txt
+    $ rm -d thesis    # use up to walk backwards through your commands
+
+create the directory and file again, cd out, then
+
+    $ mv thesis/draft.txt thesis/quotes.txt
+    $ ls thesis
+    $ mv thesis/quotes.txt .   # moves it to our current directory
+    $ ls thesis
+    $ cp quotes.txt thesis/quotations.txt
+    $ ls quotes.txt thesis/quotations.txt    # look at all the paths
+    $ rm -r quotes.txt thesis/               # recursive
+
+
+#### Key Points
+*   Unix documentation uses '^A' to mean "control-A".
+*   The shell does not have a trash bin: once something is deleted, it's really gone.
+*   Nano is a very simple text editor&mdash;please use something else for real work.
+
+CHALLENGE
+
+What is the output of the closing `ls` command in the sequence shown below?
+  $ pwd         # /home/thing/data
+  $ ls          # proteins.dat
+  $ mkdir recombine
+  $ mv proteins.dat recombine
+  $ cp recombine/proteins.dat ../proteins-saved.dat
+  $ ls
+
+Suppose that:
+  $ ls -F       # analyzed/  fructose.dat    raw/   sucrose.dat
+
+What command(s) could you run so that the commands below will produce the output shown?
+  $ ls             # analyzed   raw
+  $ ls analyzed    # fructose.dat    sucrose.dat
+
+What does `cp` do when given several filenames and a directory name, as in:
+  $ mkdir backup
+  $ cp thesis/citations.txt thesis/quotations.txt backup
+
+What does `cp` do when given three or more filenames, as in:
+  $ ls -F          #intro.txt    methods.txt    survey.txt
+  $ cp intro.txt methods.txt survey.txt
+
+The command `ls -R` lists the contents of directories recursively,
+i.e., lists their sub-directories, sub-sub-directories, and so on
+in alphabetical order at each level.
+The command `ls -t` lists things by time of last change,
+with most recently changed files or directories first.
+In what order does `ls -R -t` display things?
+
+--- 3
+
+#### Objectives
+*   Redirect a command's output to a file.
+*   Process a file instead of keyboard input using redirection.
+*   Construct command pipelines with two or more stages.
+*   Explain what usually happens if a program or pipeline isn't given any input to process.
+*   Explain Unix's "small pieces, loosely joined" philosophy.
+
+
+    $ ls -F
+    $ ls -F > files.txt   # redirect, sends output to a file
+    $ ls files.txt        # it exists!
+    $ nano files.txt      # see what's in there
+    $ cat files.txt       # read a file, prints it to the screen
+    $ sort files.txt      # boring, what else can we do
+    $ man sort
+    $ sort -r files.txt   # reverse the order. Thats cool
+    $ sort -f files.txt > reversed.txt
+    $ head -n 1 reversed.txt  # cat is too long. this is the first line
+    $ head -n 5 reversed.txt  # top 5
+
+WHAT HAPPENS when n > # of lines
+
+    $ sort reversed.txt
+    $ sort reversed.txt | head -n 1   # pipes send output from one command
+                                      # to another
+    $ ls *.txt | sort | head -n 1     # can pipe many things
+                                      # can use * as a wildcard
+
+programs are made up of smaller programs that do one thing well
+composed together in series
+
+this simple idea is why Unix has been so successful
+it makes things easier to reason about, easier to maintain
+
+#### Key Points
+*   `command > file` redirects a command's output to a file.
+*   `first | second` is a pipeline: the output of the first command is used as the input to the second.
+*   The best way to use the shell is to use pipes to combine simple single-purpose programs (filters).
+
+CHALLENGE
+
+    nano  10
+          2
+          19
+          22
+          6
+
+    $ sort nums       # is that correct? why? what is going on?
+    $ sort nums -n    # numeric sort? what is that
+
+    $ cat animals
+    $ head -n 1 animals
+    $ cut -d , -f 2 animals  # what commands could be used to remove dups
+    $ cut -d , -f 2 animals | uniq    # only does adjacent uniques
+    $ cut -d , -f 2 animals | sort | uniq  # presort and then remove dupes
+
+--- 6
+
+SKIPPING script, loop
+
+
+#### Objectives
+*   Use `grep` to select lines from text files that match simple patterns.
+*   Use `find` to find files whose names match simple patterns.
+*   Use the output of one command as the command-line parameters to another command.
+*   Explain what is meant by "text" and "binary" files, and why many common tools don't handle the latter well.
+
+Earlier we saw primitive globbing in some commands using *
+
+    $ cat haiku.txt
+
+Semi- or unstructured data is difficult to search through with our current tools, so lets figure out the command line equivalent of spotlight.
+
+    $ grep not haiku.txt      # goes through a file line by line
+                              # and returns any lines matching "not"
+                              # not is a simple pattern, lets try another
+    $ grep day haiku.txt      # it matches inside of words. lets bound it
+    $ man grep
+    $ grep -w day haiku.txt   # no matches, output empty
+    $ grep -w not haiku.txt   # there we are
+                              # where are these matches?
+    $ grep -n not haiku.txt   # line numbers
+    $ grep -n Not haiku.txt   # case sensitive
+    $ grep -i Not haiku.txt # but that can be turned off
+    $ grep -v not haiku.txt   # or get all the lines that don't match
+    $ grep 'n*t' haiku.txt      # can handle some wildcards, needs single quotes
+
+grep can handle any regular expression, which is a terse formal language that can allow for incredibly powerful queries. If you need to search for a complex pattern, though, it's a good resource to look up
+
+Grep is great, but it works on files. What if we want to look around the filesystem?
+
+    $ find . -type d -print | head -n 10
+    $ find . -type f -print | head -n 10
+    $ find . -maxdepth 1 -type f -print      # by default, find is recursive
+                                             # max depth will restrict that
+                                             # also min-depth and -empty
+    $ find . -name *.txt -print      # filters for txt files, fails
+                                     # needs single quotes to prevent expansion
+    $ grep FE $(find . -name '*.txt' -print ) # last bit of magic, $() will run
+                                              # a command and sub its output
+                                              # all at once
+                                              # in its place. differs from |, >
+
+Common to use grep and find together to locate types of files first and then look through them.
+
+    BUILD UP THIS QUERY
+    $ grep gif $(find chats -type f -print) | grep "lonnen" | wc -l
+
+#### Key Points
+*   Use `find` to find files and directories, and `grep` to find text patterns in files.
+*   `$(command)` inserts a command's output in place.
+*   `man command` displays the manual page for a given command.
+
+
+The shell has survived 30 years by being the most productive programming environment ever created. Like many things that have evolved over time, it can seem arcane at first. However, that Unix philosophy of do 1 thing and do it well means that each step you learn is small and well defined. It can be composed with other small steps to create very powerful programs.
+
+These ideas are important in any programming language, and will server you well when you begin writing your own programs in python, or whatever.
