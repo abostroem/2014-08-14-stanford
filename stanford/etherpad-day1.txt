@@ -1,0 +1,650 @@
+Welcome to MoPad!
+This pad text is synchronized as you type, so that everyone viewing this page sees the same text.  This allows you to collaborate seamlessly on documents!
+Please be cognizant of whether you are using a public pad or private/team pad, and take appropriate precautions with data you post here!
+
+Etherpad: https://abostroem.etherpad.mozilla.org/stanford
+Repository: https://github.com/abostroem/2014-08-14-stanford
+Class Website: http://abostroem.github.io/2014-08-14-stanford/
+
+Installation check:
+
+    Open a terminal window:
+
+    on a Mac: open the terminal application (under /Applications/Utilities)
+
+    on Windows: open the git-bash application
+
+    on Linux: open your favorite terminal
+
+    Check text editor installation:
+
+    in the terminal window type: nano
+
+    This should display a screen that says GNU nano at the top. To exit: hold down the control key and press x
+
+    Check git installation:
+
+    in the terminal window type: which git
+
+    you should get something that looks like this: /usr/local/bin/git even (if words are different the format should be the same) if you get nothing, you don’t have git installed
+
+    Check python installation:
+
+    in the terminal window type: which python
+
+    you should get something like this: /Users/abostroem/anaconda/bin/python if you get nothing, you don’t have python installed
+
+    Make sure that anaconda is somewhere in the returned string
+
+    in the terminal window type: ipython
+
+    This will start a python interpreter, you should get a prompt that looks like this: In [1]:
+
+    type: import numpy
+
+    If you get an ImportError, something is not installed correctly
+
+    type: import matplotlib
+
+    If you get an ImportError, something is not installed correctly
+
+    Check ipython notebook installation
+
+    in the terminal window type: ipython notebook
+
+    This will eventually open a window in your default browser. At the top of the page it will say IP[y]: Notebook. This may take a while the first time you do it, be patient (give it 5 minutes to be safe)
+
+    Back-up plan: if you never get a notebook to open, open the Anaconda Launcher (this should be on your desktop or in the programs menu). Then launch an ipython notebook from the window it brings up (option 2).
+
+Talk about us:
+
+    SWC @swcarpentry
+
+    Azalee @astro_az on twitter, abostroem on github
+
+    Dani @dtrap on github @dtrapezoid on twitter
+
+DAY 1:
+http://software-carpentry.org
+Shell (Lonnen)
+shell accepts commands that type in. $ sign means that waiting for your input
+gui = graphical user interface
+
+    $ whoami = print the user id
+
+    $ pwd = where am i in file system ("print working directory")
+
+    $ ls = what is around us - lists things that in folder with us ("list")
+
+can provide variants on commands with space, single dash, and a flag
+for example to see what are files and what are folders:
+
+    $ ls -F
+
+    $ ls -F data (tells it to look in the folder "data" that's inside pwd. can add more directories)
+
+to move into a different directory (ex: move into the data directory)
+
+    $ cd data ("change directory")
+
+    $ pwd (will now tell you that you're in the data directory)
+
+    $ ls -F (no need to specify additional terms, because already in the data directory)
+
+    $ ls -F .. (points to whatever folder is 1 up in the list)
+
+    $ cd .. (move one directory up)
+
+    $ ls -F . (points to the current directory, same as if hadn't put a dot)
+
+tab completion - start typing the command/directory and press tab - will complete for you (if >1 option, need to type tab twice to see your options)
+switching into directory with space in the name:
+
+    option 1 - use a single quote (ex: $ ls -F 'moar data')
+
+    option 2 - use a backslash (ex: $ ls -F moar \data)
+
+to see everything in a directory:
+
+    $ ls -a (if there is a . then it's a hidden file)
+
+relative path - from wherever i am, from where ever i'm running the command... (will be different if you are somewhere else on your file path)
+
+    $ ls ../data (will show you what is in the data folder that is one up from where you are)
+
+cd - without any arguments goes to the home directory OR for other people will just act on the current directory (aka does nothing)
+shortcut for home directory: ~
+
+    $ ls -S -a (can combine multiple flags, -S puts folders first, files at the end)
+
+    $ man ls (gives you the help file for ls, type q to get out of it. not applicable for git-bash on windows. easier to use google. superuser is a good site)
+
+    $ mkdir thesis (to make directory called thesis)
+
+    $ nano (text editor). ^ means Ctrl (to quit Ctrl-x)
+
+other text editors: textwrangler, textmate, sublime, vim, emacs...
+
+    rm my-thesis.txt (remove the my-thesis.txt file)
+
+Note: There is no recycling bin! If you remove something with rm, it's GONE. If you do rm something by accident, immediately turn off your computer, and call someone who knows.
+
+    $ rm thesis (won't work bc thesis is a directory)
+
+    $ rm -d thesis (flag to remove directories. can also use -r flag. (for windows use -rf))
+
+    alternative: $ rmdir thesis
+
+If have shortcuts in a folder, will it follow the shortcut and remove the originals? Depends on the OS. So test and find out. On Unix there are 2 types of shortcuts, so it depends if hard or soft shortcut.
+
+    $ mkdir test-batch-1
+
+    $ mv proteins.dat test-batch-1 (to move proteins.dat file into the test-batch-1 directory)
+
+    $ mv test-batch-1/proteins.dat .  (move file back to where i am.ng relative paths)
+
+    $ mv proteins.dat test-batch-1/cholinesterase.dat (to rename the file and move it)
+
+    $ cp test-batch-1/cholinesterase.dat backup/ (to copy the file to the backup directory)
+
+    $ rm -f test-batch-1 (deleted the directory, but still have the same file over in backup. since it's a copy if edit the original, changes are't reflected in the backup)
+
+More advanced usage:
+
+    ls -R data (will go through all the folders in data and show you the contents of each of them)
+
+Notice that flags are pretty consistent across commands. -r usually means to run command recursively. -f typically means to stop warning me and just do the thing I ask
+
+    ls -F > directory-contents (arrow points the output of ls to the file directory-contents)
+
+    nano directory-contents (will open up the file and show you the output of ls -F)
+
+    sort -r directory-contents (will reverse the sort)
+
+    head directory-contents (to look at just the first few lines)
+
+    head -n 1 directory-contents (to look just at the first line)
+
+    sort -r directory-contents > reversed-directory (put reversed output into file)
+
+    head -n 3 reversed-directory
+
+    rm reveresd-directory
+
+    sort -r directory-contents |  head -n 3 (pipe feeds whatever on left outputs into whatever is on the right. Pipe key is above the enter key). So get the same result as with > but without needing to dump into file.
+
+    sort -r directory-contents | head -n 3 | sort -r (can nest pipes)
+
+    ls -F | sort -r | head -n 3 (take output of ls, put into sort, take that output and put into head.
+
+Good to group bits of code that writing into logical, well defined, "do 1 thing do it well" blocks
+How to find things:
+want to look through all directories and find the data files (.dat extensions)
+
+    find . -type f -print (where we are looking, the type of thing we're looking for, file or direcotry, and tell it to print)
+
+    find . -type f -print | head -n 3
+
+    find . -type f -print | sort -r
+
+    find . -type f -name *.dat -print (* = wildcard)
+
+    find . -type f -name *.dat | grep cholinesterase
+
+grep first argument is some kind of pattern that looking for, then where to look)
+
+    ls | grep "datasets*" (double quotes, don't interpret * as actual *).
+
+    ls | grep dataset
+
+    ls | grep 2014 (look for 2014 pattern in the output of ls)
+
+    grep 02 * | head -n 4
+
+    grep lonnen | grep gif
+
+    find . -type f | grep .dat (find all the files and have grep give me all the ones that use .dat)
+
+Cloning directory (make sure have git installed)
+git clone https://github.com/abostroem/2014-08-14-stanford.git
+-
+Notes on Git
+What is VC? Change tracking and versioning of text files for the purpose of backup and collaboration
+Why use VC? Change tracking can get very complicated without it.
+- Compare two versions E.g. when you have one that works and one that doesn't, you can compare them to find the part that is likely responsible.
+- Share-a-bility! Transparency.
+Git is awesome because of GitHub, a service for hosting a repository on a machine that isn't your laptop. This makes it easy to share, collaborate, and keep things in sync across multiple machines.
+General git workflow
+- Working directory: Make directory with files that have stuff in them
+- Staging area: "Stage" a file, i.e. give Git a snapshot of a file that should be tracked
+- Local repository: Save the snapshot to the "repository", i.e. the thing keeping track of snapshots of files
+- Remote repository: Sync your local change tracking information to a remote repository. Essentially the same thing as syncing a folder to dropbox.
+- Others can pull those changes from the remote repository to their local repository, modify them, commit those changes to their local repository, then sync that back to the remote repository (to share again with you).
+Into the shell:
+  git config --global user.name "Your Name"
+  git config --global user.email email@address.com
+  git config --global color.ui auto
+  git config --global core.editor nano
+
+  or use notepad as an alternative
+
+Making a local git repository:
+cd ~
+mkdir swc_test_repo
+cd swc_test_repo
+git init
+#Initialized empty Git repository in /Users/cb/swc_test_repo/.git/
+What files are staged for commit and what has been modified? "git status"
+What are the common commands? "git help"
+How do you use a particular command? "get help [command]"
+Telling Git to start tracking a file:
+cb:swc_test_repo cb$ pwd
+/Users/cb/swc_test_repo
+cb:swc_test_repo cb$ touch names.txt
+# This file can be created or modified with any text editor. The touch command is one that simply creates a file.
+cb:swc_test_repo cb$ git add names.txt
+cb:swc_test_repo cb$ git status
+The output for that command
+"
+On branch master
+Initial commit
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   names.txt
+"
+Notice that "names.txt" will be in red if the file is being tracked and will be in red if it is not being tracked.
+What this is telling you is that there is a file, names.txt, that has been created. There are two other concepts here, that of the branch and that of the commit ("Initial commit").
+For getting help on git, you can type `git help` or browse help documents through your browser at http://git-scm.com/doc/
+Now try adding another file:
+echo "Castor" > stars.txt
+or
+create a file "stars.txt" with a text editor and add some text to it.
+And add it to the repository:
+git add stars.txt
+Here's the current git status:
+cb:swc_test_repo cb$ git status
+"
+On branch master
+Initial commit
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   names.txt
+        new file:   stars.txt
+"
+If you typed git status without first adding stars.txt, i.e. typing `git add stars.txt`, stars.txt will be red in the output of git status.
+To commit (i.e. save) these changes to the repository (i.e. change-tracking database), type the following:
+git commit -m "This is a description of the commit that was made, e.g. added a star to stars.txt"
+This can be done in an interactive way by simply typing `git commit`, which will open up your default git text editor where you can add a commit message. This is only necessary if you need to write a commit message with complex formatting.
+To set your default text editor for git, i.e. the one that will open automatically when you type git commit without the -m option, use the following:
+git config --global core.editor [editor], e.g. git config --global core.editor nano
+Undoing mistakes:
+git reset HEAD filename
+Exercise 3 - modify a file, stage it, remove it from staging, and un-modify it:
+cb:swc_test_repo cb$ vi stars.txt
+# Added something to stars.txt
+cb:swc_test_repo cb$ git add stars.txt
+# Staged stars.txt
+cb:swc_test_repo cb$ git reset HEAD stars.txt
+Unstaged changes after reset:
+M        stars.txt
+# Unstaged stars.txt
+cb:swc_test_repo cb$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+        modified:   stars.txt
+no changes added to commit (use "git add" and/or "git commit -a")
+cb:swc_test_repo cb$ cat stars.txt
+Castor
+tst
+1234
+cb:swc_test_repo cb$ git checkout -- stars.txt
+cb:swc_test_repo cb$ cat stars.txt
+Castor
+tst
+# The "1234" I added has been removed because I reverted the file to the last version that was committed to the repository.
+Comparing files with diff:
+cb:swc_test_repo cb$ git diff stars.txt
+diff --git a/stars.txt b/stars.txt
+index 4c1a12f..395f6a9 100644
+--- a/stars.txt
++++ b/stars.txt
+@@ -1,2 +1,3 @@
+ Castor
+ tst
++12345
+This shows that the file stars.txt has been changed by the single addition of the string "12345" between the current version of the file (which has not been staged / git add) and the last one that was committed.
+-
+You may see an error about line endings on windows machines. Set the following global config parameter to avoid potential conflicts later:
+$ git config --global core.autocrlf true
+The warning will still display, but it is harmless. Once you graduate to an editor other than nano (notepad++, sublime) the editor will fix the line endings for you.
+--
+Viewing commit history: git log
+Example output:
+cb:swc_test_repo cb$ git log
+commit d5164dfe7cd464f12a41fc1b875b970382d8d635
+Author: cb01 <EMAIL>
+Date:   Thu Aug 14 12:03:39 2014 -0700
+    Some appropriate commit message
+commit 99f62733d725b6e6cc80744123357d538606380a
+Author: cb01 <EMAIL>
+Date:   Thu Aug 14 12:02:24 2014 -0700
+    Another appropriately descriptive commit message
+Each commit is uniquely identified by the commit hash. The first 5-7 characters of it can be used as a shorthand.
+--
+Moving and removing files in git
+git mv: moves file
+git rm: removes file
+Why use these instead of just normal unix mv and rm commands? Doing things this way allows git to keep track of these operations.
+So ok, you used standard rm or mv, now what? You can use "git rm [filename]" following "rm [filename]" to tell git about that operation.
+--
+Exercise 5: create a file, start tracking your file, commit your file, modify your file, stage your file, commit your changes
+Toolbox:
+- git add filename
+- git commit -m "message"
+- git status
+- git help
+- git reset HEAD filename
+- git checkout -- filename
+- git diff filename
+Solution:
+cb:swc_test_repo cb$ vi hellokitty.txt
+cb:swc_test_repo cb$ git add hellokitty.txt
+cb:swc_test_repo cb$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+        new file:   hellokitty.txt
+        modified:   names.txt
+        modified:   stars.txt
+cb:swc_test_repo cb$ git commit -m "Added snarky dummy file for an example at awesome workshop."
+[master 6beddee] Added snarky dummy file for an example at awesome workshop.
+ 3 files changed, 3 insertions(+)
+ create mode 100644 hellokitty.txt
+cb:swc_test_repo cb$ vi hellokitty.txt
+cb:swc_test_repo cb$ git add hellokitty.txt
+cb:swc_test_repo cb$ git commit -m "hellokitty.txt: added something profound"
+[master 20108ef] hellokitty.txt: added something profound
+ 1 file changed, 1 insertion(+)
+cb:swc_test_repo cb$ git log
+Contents of git log:
+"
+commit 20108efae895bf0117aa2af3c608bece62b2713a
+Author: cb01 <EMAIL>
+Date:   Thu Aug 14 13:28:14 2014 -0700
+    hellokitty.txt: added something profound
+commit 6beddee2a5e1afc188a7ea72e4cea500119bb7a8
+Author: cb01 <EMAIL>
+Date:   Thu Aug 14 13:26:39 2014 -0700
+    Added snarky dummy file for an example at awesome workshop.
+"
+Commit messages can be longer than one line. You can use them to write out context for the contents of the commit, which will be helpful to your future self when you come back to look over the changes days or weeks later.
+ADVANCED GIT
+Branching - allows for parallel universes
+create a branch called testing:
+    $ git branch testing
+ask git which branch you are on:
+    $ git branch
+switch to the testing branch:
+    $ git checkout testing
+--
+Branching:
+cb:swc_test_repo cb$ git branch testing
+cb:swc_test_repo cb$ git branch
+* master (<- this is in green)
+  testing
+cb:swc_test_repo cb$ git checkout testing
+Switched to branch 'testing'
+--
+What happens when you add and commit a file to a branch and switch back to master?
+cb:swc_test_repo cb$ git branch
+  exercise
+* master
+  testing
+
+cb:swc_test_repo cb$ git checkout exercise
+A        file.txt
+Switched to branch 'exercise'
+cb:swc_test_repo cb$ ls
+file.txt        hellokitty.txt        names.txt        stars.txt
+cb:swc_test_repo cb$ git status
+On branch exercise
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+        new file:   file.txt
+cb:swc_test_repo cb$ touch file2.txt
+cb:swc_test_repo cb$ ls
+file.txt        hellokitty.txt        stars.txt
+file2.txt        names.txt                             <-- file2.txt and file.txt ARE here
+cb:swc_test_repo cb$ git add file2.txt
+cb:swc_test_repo cb$ git status
+On branch exercise
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+        new file:   file.txt
+        new file:   file2.txt
+cb:swc_test_repo cb$ git commit -m 'tst'
+[exercise e12c34e] tst
+ 2 files changed, 1 insertion(+)
+ create mode 100644 file.txt
+ create mode 100644 file2.txt
+
+cb:swc_test_repo cb$ git status
+On branch exercise
+nothing to commit, working directory clean
+cb:swc_test_repo cb$ git checkout master
+Switched to branch 'master'
+cb:swc_test_repo cb$ ls
+hellokitty.txt        names.txt        stars.txt        <-- file2.txt and file.txt ARE NOT here
+# As you can see, the file2.txt file that was added and committed on the exercise branch is not visible after switching back to the master branch.
+--
+What happens when there are two different versions of a file on different branches, when there are changes that have not been committed on the current branch? It will warn you that it will overwrite the file if the branch is changed. What you need to do first is to commit the current changes to the current branch before switching to a different branch.
+--
+Let's create a file that is different on two different branches that will need to be merged:
+cb:swc_test_repo cb$ git checkout master
+Switched to branch 'master'
+cb:swc_test_repo cb$ git add mergeme.txt
+cb:swc_test_repo cb$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+        new file:   mergeme.txt
+cb:swc_test_repo cb$ git commit -m "file that will need to be merged later"
+[master 37deb7f] file that will need to be merged later
+ 1 file changed, 1 insertion(+)
+ create mode 100644 mergeme.txt
+cb:swc_test_repo cb$ git branch mergeme-branch
+cb:swc_test_repo cb$ git checkout mergeme-branch
+Switched to branch 'mergeme-branch'
+cb:swc_test_repo cb$ ls
+hellokitty.txt        mergeme.txt        names.txt        stars.txt
+cb:swc_test_repo cb$ echo "something else" >> mergeme.txt
+cb:swc_test_repo cb$ git add mergeme.txt
+cb:swc_test_repo cb$ git commit -m "version 2 of mergeme.txt on branch mergeme-branch"
+[mergeme-branch 23b6942] version 2 of mergeme.txt on branch mergeme-branch
+ 1 file changed, 1 insertion(+)
+cb:swc_test_repo cb$ git checkout master
+Switched to branch 'master'
+cb:swc_test_repo cb$ echo "a third thing" >> mergeme.txt
+cb:swc_test_repo cb$ git add mergeme.txt
+cb:swc_test_repo cb$ git commit -m "third version of mergeme.txt on master"
+[master 664be77] third version of mergeme.txt on master
+ 1 file changed, 1 insertion(+)
+cb:swc_test_repo cb$ ls
+hellokitty.txt        mergeme.txt        names.txt        stars.txt
+cb:swc_test_repo cb$ cat mergeme.txt
+some text
+a third thing
+cb:swc_test_repo cb$ git checkout mergeme-branch
+Switched to branch 'mergeme-branch'
+cb:swc_test_repo cb$ cat mergeme.txt
+some text
+something else
+Let's try to merge the mergeme-branch branch back into master (there should be a conflict, since the mergeme.txt file is different on different branches):
+cb:swc_test_repo cb$ git branch
+  exercise
+  master
+* mergeme-branch
+  mergethis
+  testing
+cb:swc_test_repo cb$ git checkout master
+Switched to branch 'master'
+cb:swc_test_repo cb$ git branch
+  exercise
+* master
+  mergeme-branch
+  mergethis
+  testing
+cb:swc_test_repo cb$ git merge mergeme-branch
+Auto-merging mergeme.txt
+CONFLICT (content): Merge conflict in mergeme.txt
+Automatic merge failed; fix conflicts and then commit the result.
+So what is the conflict, exactly?
+cb:swc_test_repo cb$ git diff mergeme.txt
+diff --cc mergeme.txt
+index a26c7ad,c00f06e..0000000
+--- a/mergeme.txt
++++ b/mergeme.txt
+@@@ -1,2 -1,2 +1,6 @@@
+  some text
+++<<<<<<< HEAD
+ +a third thing
+++=======
++ something else
+++>>>>>>> mergeme-branch
+The conflict is shown in the file itself:
+cb:swc_test_repo cb$ cat mergeme.txt
+some text
+<<<<<<< HEAD
+a third thing
+=======
+something else
+>>>>>>> mergeme-branch
+Git status tells us more about this problem:
+cb:swc_test_repo cb$ git status
+On branch master
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+        both modified:      mergeme.txt
+no changes added to commit (use "git add" and/or "git commit -a")
+--
+Now let's resolve the conflict:
+cb:swc_test_repo cb$ cat mergeme.txt
+some text
+<<<<<<< HEAD
+a third thing
+=======
+something else
+>>>>>>> mergeme-branch
+cb:swc_test_repo cb$ vi mergeme.txt
+cb:swc_test_repo cb$ cat mergeme.txt
+some text
+a third thing
+cb:swc_test_repo cb$ git add mergeme.txt
+cb:swc_test_repo cb$ git status
+On branch master
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+nothing to commit, working directory clean
+cb:swc_test_repo cb$ git commit -m "fixed merge conflict by randomly choosing among available options"
+[master a4028c2] Merge branch 'mergeme-branch'
+cb:swc_test_repo cb$ git status
+On branch master
+nothing to commit, working directory clean
+Note the you will need to delete a branch you no longer need or it will still be there.
+To delete a branch:
+git branch -d branch_name
+-----------------------------------------------------------------------------------------------------------------------
+Python!
+you should be in a folder that looks something like: ~/2014-08-14-stanford
+ $ cd stanford
+ $ ls
+ $ ls -F
+ $ cd python
+ $ ipython
+ Running ipython will start an ipython instance
+
+ In [1]: print "Hello"
+ Hello
+ In [2]: x = 2
+ 2
+ In [3]: print x
+ 2
+In [4]: data_points=[]
+In [5]: data_points
+Out [5]: []
+In [6]: 9/5.0
+Out [6]: 1.8
+exit
+$ipython-notebook
+Will open up an ipython notebook in your browser
+In[1]: print "Hello Everyone"
+Hello Everyone
+In [2]: prnt "Hello Everyone"
+File "<ipython....blahhh> blah blah ERROR!
+MUCH ERROR, this is an error
+Lonnen: You can go back and change this and reenter it in In [2]
+Go to file and delete cell
+Delete previous cells
+In [6]: input_file = open('mosquito_data_A1.csv' , 'r')
+print input_file.read()
+year, temperature, rainfall, mosquitos
+2001, 87, 222,198
+2002,72,103, 105
+.......etc
+In [9]: import numpy as np
+In[10]: np.genfromtxt( 'mosquito_data_A1.csv' , unpack=True, skiprows=1, delimiter=","))
+Out[10]: [( 2001. 2002. 2003. ...etc )]
+In [11]: year, temperature, rainfall, mosquitos = mosquito_dataset
+           print year
+           [2001. 2002. 2003. ......etc]
+In [ ]: # challenge: calculate the average temp in the dataset
+# google around for the documentation on built-in functions
+In [19]: print np.mean(temperature)
+           np.mean(temperature) / float(len(temperature))
+
+           82.1
+           82.1
+
+In [22}: def mean():
+           # the whitespace in the beginning and end is what python is looking for
+           sum(temperature) / float(len(temperature))
+
+           print mean()
+Out [23]: None
+In[24]: def mean(my_list):
+               return sum(temperature) / float(len(temperature))
+
+          print mean (temperature)
+Out [24]: 82.1
+Exercise 1: Now that we know how to define a function, let's define a function that can take mylist and spit back out data range
+In [30]: def range(my_list):
+                 return my_list[0]
+
+            range(temperature)
+Out [30]: 87.0
+In [32]: print range(1,10)
+Out [32]: [1,2,3,4,5,6,7,8,9]
+Do Exercise 1
+# EX: define a new function that returns the difference between the greatest and lowest element of an array
+def dataRange(myList):
+    return max(myList) - min(myList)
+def data_range(x):
+    return max(x)-min(x)
+print data_range(temperature)
+Out[ex1]: 18.0
+*Link to notebook to be added soon
+In [54]: rainfall[-1]
+Out [54]: 101.0
+Prettier than In [55]:
+One more challenge for today:
+Import the data from the 'mosquito_data_A2.csv', create new variables for the arrays there, and print the mean and standard deviation for rainfall and temperature
+mosquito_dataset_A2 = np.genfromtxt('mosquito_data_A1.csv',unpack=True,skiprows=1,delimiter=",")
+print mosquito_dataset_A2
+years_2,temperature_2,rainfall_2,mosquitos_2 = mosquito_dataset_A2
+print rainfall_2
+print mean(rainfall_2)
+print np.std(rainfall_2)
