@@ -1,0 +1,291 @@
+Welcome to MoPad!
+
+This pad text is synchronized as you type, so that everyone viewing this page sees the same text.  This allows you to collaborate seamlessly on documents!
+
+Please be cognizant of whether you are using a public pad or private/team pad, and take appropriate precautions with data you post here!
+ 
+Etherpad: https://abostroem.etherpad.mozilla.org/stanford
+Repository: https://github.com/abostroem/2014-08-14-stanford
+Class Website: http://abostroem.github.io/2014-08-14-stanford/
+ 
+PYTHON Day 2
+PLOTTING (Azalee)
+markdown cells - not code that needs to be executed, but instead can put notes, make them pretty
+
+magic functions - start with % (do special things like timing how long it takes to run a cell)
+%pylab (allows notebook to talk to matplotlib backend so can open plotting windows. without it can't do interactive things and plotting hangs)
+
+pyplot.ion - turns interactive plotting on
+pyplot.plot(year, mosquitos) - pops up a plotting window. can make window bigger, can scale axes, etc...
+when running something from text file, if don't save figure in code or pause the execution, it will close the window when finishes running the code. if just working in python shell then can plot interactively.
+magnifying glass - if click can zoom in on parts of plot. to undo, click the back arrow. home takes you back to original view
+notebook is useful for exploring data, taking notes for yourself
+
+pyplot.plot(year, mosquito, marker = '^', color = 'r', linestyle = '--') for plotting dashed line with diamond points in red, colors can write out color names, can use html colors, or for some can just do r, y, c, etc.
+python by default overplots.
+
+labeling axes and putting a legend: 
+pyplot.xlabel('year') #xaxis label
+pyplot.ylabel('number of mosquitos')  #yaxis label
+pyplot.title('number of mosquitos per year') #title
+pyplot.legend(['data from A1'], loc = 'best') #put as list (square brackets is a list). best location for legend will move the legend so that doesn't overlap with the plot as scroll. can specify with location keyword different locations.
+
+if don't want to save interactively ie running from command line and just want plot to save:
+pyplot.savefig('second_plot.pdf') #it figures out from the extension what format you want it to save in. png, pdf, etc...
+
+plotting resources:
+matplotlib.org - gallery - pictures of all kinds of plots you might want to make. different color bars, bar plots, etc. if click on plot, gives you the code it used for the plot. can copy paste the code into the shell/notebook and will get the plot. 
+matplotlib.org - list of plotting commands - click on function, get documentation. useful for searching for different functions. if click on plot then get the list of all the different linestyles and the different markerstyles as well as the letters that correspond to colors as well as how else can specify colors.
+
+exercise: plot with green circles rainfall vs mosquitos. label axes, give your plot a title, save it!
+pyplot.plot(rainfall, mosquitos, marker = 'o', color = 'g')
+pyplot.xlabel('rainfall')
+pyplot.ylabel('mosquitos')
+pyplot.title('mosquitos correlation with rainfall')
+will over plot, so 2 choices, can close the plot before plotting new, or can call pyplot.figure() which gives you a new blank figure. be careful bc if put in a loop will get tons of figures
+when plot get a bunch of crazy lines, so can do: linestyle = 'none', which then just gives you the dots.
+pyplot.savefig('rainfall_mosquitos.jpg') (can specify a full path to where you actually want to put it)
+pyplot.subplot(1,2,1) # number of rows, columns, and which box num it is
+pyplot.plot(year, mosquitos) # this is for the first plot
+pyplot.subplot(1,2,2) # for the 2nd plot
+pyplot.plot(year, rainfall) # plots in the box for the 2nd plot
+
+TESTING in software development (Chris)
+design goals - a function that checks whether a string starts with another string (note that it's clear and has tests for it). before write code, state what what to achieve and how will test it. then prototype function
+dna_starts_with('actggt', 'act') => True #is what you want it to do
+
+#the function
+def dna_starts_with(string, query_prefix):
+    #check whether the query prefix string mateches the prefix of string 
+    #(just in pseudocode write what you want it to do).
+    return logical
+
+#the tests
+def test_dna_starts_with():
+    #this tests if your function can give the right answer
+    assert dna_starts_with('actggt','act') == True, 'String prefex check failed'
+    assert dna_starts_with('actggt','ctg') == False 'String prefix check failed'
+
+string[0:2] #this gives you the first 3 letters of the string. can index string like an array
+helpful to put print statements in a function as developing so can see what's going in/out
+
+#the function
+dna_starts_with(string, query_prefix):
+    print query_prefix #print statement to be removed later
+    query_prefix_len = len(query_prefix) #gives you the length of your query
+    print query_prefix_len
+    logical = (query_prefix == string[0: query_prefix_len]) 
+    return logical
+    
+To get from file to plot:
+ 1) Read in file
+ 2) Take the file, and process to organize to data structures that can manipulate and do useful arithmetic on. Also, do any transformation that want to do on data
+ 3) Write out the plot!
+ 
+ Code block with 3 functions:
+ 1) function that reads in file and transform into python numpy arrays
+ 2) function that take mosquito temp and convert to F from C
+ 3) function that plots
+
+ pass #placeholder in function so don't get error if run the blank function
+ 
+def read_csv_file():
+    '''
+    Put notation about what func should expect as input and as output. 
+    Put docstring in three quotes. Anything inside there is a comment 
+    (ignored at execution time)
+    This code will read in a csv file of yr, tmp, rainfall, and num of mosquitos
+    And will return 4 arrays
+    args:
+        filename - a string containing the location of a file on the filesystem
+    returns:
+        returns an array of arrays containing the data only, without headers
+    '''
+   
+def convert_F_to_C():
+    """
+    This code will convert an array of temperatures from F to C
+    """
+
+def plot_data():
+    '''
+    This code will plot the arrays in x and y with symbol (default 'o')
+    '''
+
+# and ''' have different uses - # is nice for short inline comments, triple quote is good for spanning multiple lines (multi-line string). If do help(read_csv_file) then will print out this doc string. 
+
+def read_csv_file(input_csv_file):
+    '''
+    this code will rad in a csv file of year, temp, rainfall, and number of mosquitos
+    and return 4 arrays, one for each column 
+    '''
+    years, temp, rainfall, mosquitos = np.genfromtext(input_csv_file, unpack = True, skiprows = 1, delimiter = ",")
+    return years, temp, rainfall, mosquitos 
+    #could also have just returned straight from np.genfromtext, but less explicit
+
+def convert_F_to_C(temp_in_F):
+    '''
+    This code will convert an array of temperatures from F to C
+    '''
+    assert type(temp_in_f) == type(0) #test that your input is the right format if are particular about your inputs
+    temp_in_c = (temp_in_f -32) *5.0 / 9.0 #can get additional precision by forcing the numbers to have decimals.
+    return temp_in_c
+
+%whos - in ipython gives you all the variables/function in the workspace. Can do in notebook and interpreter
+% at the start of a block is a directive to the notebook (%s also have meaning in python)
+
+# test temp conversion
+assert convert_F_to_C(212) == 100
+assert convert_F_to_C(32) == 0 
+what is assert for? assert is telling python that whatever comes after it needs to be true. Can put it into a testing function.
+
+def plot_data(x, y, marker, plot_name):
+    '''
+    This code will plot data with a symbol. Will save to file plot_name
+    '''
+    pyplot.ion()
+    pyplot.figure()
+    pyplot.plot(x, y, str(marker))
+    pyplot.savefig(plot_name)
+    pyplot.close()
+    
+plot_data(mosquitos, temp, '^', 'fourth_plot.pdf')
+
+Leaving the ipython notebook: copy contents of the functions. In terminal (in the stanford python folder), open nano
+$ nano analysis.py
+paste in the program from the ipython notebook, skipping the %pylab command (don't forget to include the import statements, import numpy as np, etc...)
+to execute outside of ipython notebook - we can now take the .py file and execute it:
+$ python analysis.py
+
+    
+    
+Additional tips:    
+Terminal Customization: (get fancy colors and tools... make it look much pretty and full of utility!): http://mindthecode.com/customize-the-terminal/
+*Note that in this post when run the following command: curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
+
+not: {% highlight bash %} $ curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh {% endhighlight %}
+
+The {%highlight bash %} and {% endhighlight %} is not included.
+Also, add the following two lines somewhere (between the lines with PROMPT... and the first ZSH_THEME... worked):
+local ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ %s)"
+PROMPT='${ret_status}%{$reset_color%} '
+
+def plot_data(x,y):
+    pyplot.plot(x,y, marker = 'o')
+
+
+def plot_data(x,y,marker):
+    '''
+    This code will plot arrays into to x and y with a symbol
+    '''
+    %pylab
+    from matplotlib import pyplot
+    pyplot.ion()
+    pyplot.figure()  ## Careful with this command, if in a loop, you'll get tons of figures!
+    pyplot.plot(x,y,str(marker))
+    pyplot.savefig('fourth_plot.pdf')
+
+
+
+def plot_data(x,y,plotSymbol="o"):
+    '''
+    This function will plot the arrays in x and y with symbol (default "o")
+    '''
+    
+    pyplot.figure()
+    pyplot.plot(x, y, marker=plotSymbol, color="g", linestyle = "none")
+
+Remote Git for sharing and collaborating
+cd to your home directory and find the software carpentry test repo we made
+you copied the remote repo when you cloned it yesterday (so the file structure in github is what you have locally).
+create a new repo on github - click on your username, click on repositories, and there should be a new option, and then call it swc_test_repo. Can give it a description. By default it's public
+to request a free micro account for edu and then can have private repos: https://education.github.com/
+You can initialize with a README, gitignore is stuff you don't ever want git to track
+Push an existing repo from the comand line -
+$ git remote add origin https://copy-paste-from-your-github
+$ git push -u origin master
+will be prompted for a username and password
+$ git remote -v 
+origin is an alias for the url, git remove -v tells you where origin alias is pointing
+exercise review: edit your names.txt file, add and commit your names.txt file
+git commit -m 'added Dani'
+git push origin master
+How do you pull down changes from the remote server?
+git pull origin master
+
+--
+
+Review of what we've been doing:
+
+Pull down changes from a remote repository: git pull origin master
+
+make changes to the code using your favorite language (i.e. python)
+- plan broadly, establishing testable features
+- prototype structure using function stubs
+- express features as tests
+- complete and test each part of the program individually before trying to integrate them
+
+stage changes to be committed to your local repository: git add 
+
+commit changes to your local repository: git commit
+
+push changes to the remote repository
+- If changes have been made on the remote server, you will need to pull down the remote copy, then make changes and push back to the remote server. This means you will be resolving merge conflicts on your machine instead of pushing code with conflicts back to the remote repository.
+
+Take partner 1's repo and both push and pull from it:
+Then partner 2 takes partner 1 url (from etherpad), and go there in your web browser
+clone partner 1's repo - take the https, cd out of your repo, then git clone <url> (can't put it in the same place as your repo because of conflicting names. go to home directory, mkdir collaboration, and then do your git clone)
+
+Code Review:
+More comments, especially in what process does to arr_arr
+semi-colons - harmless but unnecessary
+wrote own function instead of numpy mean and stdev (don't make a mistake)
+    commonly used functions have many thousands of peer reviews
+Error in definitions of stdev
+import os and pyplot when you don't use it in the code
+    extra line you have to care about
+    extra code you need installed to run code
+2 returns in read_csv_file - the last 2 lines are never executed
+Better/descriptive variable names
+numpy.savetxt instead of write function
+print statement in a for loop - this could really clutter your screen
+calculate max and min but never use them
+
+How Lonnen Reviews Text:
+Look at the basic form
+Run it to see if it outputs what it is supposed to output
+Then go through it line by line
+
+Stackoverflow and Superuser: community where people post problems and the community answers them
+Python documentation
+Numpy documentation
+Look up what you don't know
+
+Writing code is harder to write than to read it
+    If someone else can't look at your code and figure it out, it is likely that you won't be able to either in a few weeks
+Build relationships who are interested in making  their work better
+You learn a lot from code review
+
+
+--
+
+Resources
+- The presentation where Azalee listed resources
+- http://git-scm.com/book/en/
+- http://pcottle.github.io/learnGitBranching
+- http://help.github.com/
+- The MoPad
+- The workshop repository with ipython notebooks
+- The code you and people you know wrote in this workshop
+- Stackoverflow, superuser, 
+- choosealicense.com        
+
+
+
+
+
+
+
+
+
+
